@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.homaapp"
+        applicationId "com.newapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -149,6 +149,10 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+    }
+    compileOptions {
+      sourceCompatibility JavaVersion.VERSION_1_8
+      targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         debug {
@@ -178,11 +182,15 @@ android {
     }
 }
 
+configurations.all {
+      resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+          def requested = details.requested
+          if (requested.group == 'com.android.support' && (requested.name != 'multidex' && requested.name != 'multidex-instrumentation')) {
+              details.useVersion "${rootProject.ext.supportLibVersion}"
+          }
+      }
+  }
 dependencies {
-    implementation project(':react-native-device-info')
-    implementation project(':react-native-i18n')
-    implementation project(':react-native-vector-icons')
-    implementation project(':react-native-gesture-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.facebook.react:react-native:+"  // From node_modules
 

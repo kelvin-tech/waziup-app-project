@@ -57,7 +57,11 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-
+coverage/
 # Misc
-#
-.env
+#.env
+ios/Index/DataStore
+ios/Carthage
+ios/Pods
+fastlane/report.xml
+android/app/bin

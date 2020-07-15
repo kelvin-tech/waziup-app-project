@@ -1,17 +1,17 @@
 {
+  "name": "NewApp",
   "createdWith": "3.5.2",
-  "boilerplate": "ignite-andross",
-  "examples": "classic",
-  "navigation": "react-navigation",
-  "askToOverwrite": true,
+  "boilerplate": "ignite-jhipster",
+  "jhipsterDirectory": "../NewApp",
+  "authType": "jwt",
+  "searchEngine": true,
+  "websockets": false,
+  "detox": false,
+  "askToOverwrite": false,
   "generators": {
-    "component": "ignite-andross",
-    "container": "ignite-andross",
-    "listview": "ignite-andross",
-    "list": "ignite-andross",
-    "redux": "ignite-andross",
-    "saga": "ignite-andross",
-    "screen": "ignite-andross"
+    "entity": "ignite-jhipster",
+    "import-jdl": "ignite-jhipster",
+    "upgrade": "ignite-jhipster"
   },
-  "boilerplateVersion": "4.2.0"
+  "boilerplateVersion": "3.5.5"
 }

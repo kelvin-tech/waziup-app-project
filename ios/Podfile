@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'HomaApp' do
-  # Pods for HomaApp
+target 'NewApp' do
+  # Pods for NewApp
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -34,15 +34,7 @@ target 'HomaApp' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
-
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
-  pod 'RNI18n', :path => '../node_modules/react-native-i18n'
-
-  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
-
-  target 'HomaAppTests' do
+  target 'NewAppTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -50,10 +42,10 @@ target 'HomaApp' do
   use_native_modules!
 end
 
-target 'HomaApp-tvOS' do
-  # Pods for HomaApp-tvOS
+target 'NewApp-tvOS' do
+  # Pods for NewApp-tvOS
 
-  target 'HomaApp-tvOSTests' do
+  target 'NewApp-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end
