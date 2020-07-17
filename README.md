@@ -1,4 +1,4 @@
-# NewApp
+# HomA
 
 - React Native app generated with [Ignite JHipster](https://github.com/ruddell/ignite-jhipster). See the Ignite JHipster docs for more details regarding this boilerplate.
 
