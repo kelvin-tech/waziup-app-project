@@ -23,7 +23,8 @@ const colors = {
   border: '#483F53',
   banner: '#5F3E63',
   text: '#E0D7E5',
-  whiteBackdrop: '#ffffff'
+  whiteBackdrop: '#ffffff',
+  darkAsh: '#B2BEB5'
 }
 
 export default colors

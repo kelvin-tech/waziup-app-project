@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
+import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity, Linking } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
 import styles from './login-screen.styles'
 import { Images, Metrics } from '../../shared/themes'
 import LoginActions from './login.reducer'
+import Toast from 'react-native-simple-toast';
+import { truncate } from 'lodash'
 
 class LoginScreen extends React.Component {
   static propTypes = {
@@ -22,7 +24,10 @@ class LoginScreen extends React.Component {
       username: '',
       password: '',
       visibleHeight: Metrics.screenHeight,
-      topLogo: { width: Metrics.screenWidth },
+      topLogo: {
+        width: Metrics.screenWidth,
+        height: 230
+      },
     }
   }
 
@@ -37,13 +42,30 @@ class LoginScreen extends React.Component {
     }
   }
 
-  handlePressLogin = () => {
-    const { username, password } = this.state
-    // attempt a login - a saga is listening to pick it up from here.
-    this.props.attemptLogin(username, password)
+  waziLogin = async credentials => {
+    try {
+      await this.props.getAuth(credentials)
+    } catch (error) {
+      console.tron.log('Error logging in' + error)
+    }
   }
+
+  handlePressLogin = () => {
+    const credentials = {
+      username: this.state.username,
+      password: this.state.password
+    }
+    // attempt a login - a saga is listening to pick it up from here.
+    if (this.state.username) {
+      Toast.showWithGravity('Please input username')
+    } else if (this.state.password) {
+      Toast.showWithGravity('Please input password')
+    } else if (credentials) {
+      { this.waziLogin(credentials) }
+    }
+  }
+
   handlePressCancel = () => {
-    this.props.logout()
     Navigation.dismissModal(this.props.componentId)
   }
 
@@ -59,9 +81,9 @@ class LoginScreen extends React.Component {
     const { username, password } = this.state
     const { fetching } = this.props
     const editable = !fetching
-    const textInputStyle = editable ? styles.textInput : styles.textInputReadonly
+    const textInputStyle = styles.textInput 
     return (
-      <ScrollView
+      <View
         contentContainerStyle={styles.contentContainer}
         style={[styles.container, { height: this.state.visibleHeight }]}
         keyboardShouldPersistTaps="always">
@@ -76,7 +98,6 @@ class LoginScreen extends React.Component {
               testID="loginScreenUsername"
               style={textInputStyle}
               value={username}
-              editable={editable}
               keyboardType="default"
               returnKeyType="next"
               autoCapitalize="none"
@@ -97,7 +118,6 @@ class LoginScreen extends React.Component {
               testID="loginScreenPassword"
               style={textInputStyle}
               value={password}
-              editable={editable}
               keyboardType="default"
               returnKeyType="go"
               autoCapitalize="none"
@@ -123,7 +143,13 @@ class LoginScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+        <View style={styles.noAccount}>
+          <Text style={styles.noAccountText}>If you don't have an account, click </Text>
+          <TouchableOpacity onPress={() => Linking.openURL('https://dashboard.waziup.io/')} testID="createUserButton">
+            <Text style={styles.noAccountUnderline} >here</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     )
   }
 }
@@ -139,6 +165,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
+    getAuth: (credentials) => dispatch(LoginActions.loginRequest(credentials)),
     logout: () => dispatch(LoginActions.logoutRequest()),
   }
 }

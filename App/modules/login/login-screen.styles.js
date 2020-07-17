@@ -5,15 +5,18 @@ import { Colors, Metrics } from '../../shared/themes'
 export default StyleSheet.create({
   contentContainer: {
     justifyContent: 'center',
+    flex: 1
   },
   container: {
-    paddingTop: 70,
-    backgroundColor: Colors.jhipsterBlue,
+    backgroundColor: Colors.darkAsh,
+    paddingTop: 30
   },
   form: {
     backgroundColor: Colors.snow,
     margin: Metrics.baseMargin,
     borderRadius: 4,
+    elevation: 3,
+    top: 10
   },
   row: {
     paddingVertical: Metrics.doubleBaseMargin,
@@ -39,11 +42,10 @@ export default StyleSheet.create({
     flex: 1,
   },
   loginButton: {
-    flex: 1,
     borderWidth: 1,
     borderColor: Colors.charcoal,
     backgroundColor: Colors.panther,
-    padding: 6,
+    padding: 10,
   },
   loginText: {
     textAlign: 'center',
@@ -53,4 +55,19 @@ export default StyleSheet.create({
     alignSelf: 'center',
     resizeMode: 'contain',
   },
+  noAccount: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 70,
+    alignSelf: 'center',
+  },
+  noAccountUnderline:{
+    color: Colors.jhipsterBlue,
+    textDecorationLine: 'underline',
+    fontSize: 18
+  },
+  noAccountText:{
+    color: Colors.charcoal,
+    fontSize: 18
+  }
 })
