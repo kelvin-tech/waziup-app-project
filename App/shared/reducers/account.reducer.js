@@ -3,12 +3,13 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  accountRequest: [],
+  accountRequest: ['accountId'],
   accountSuccess: ['account'],
   accountFailure: ['error'],
   accountUpdateRequest: ['account'],
   accountUpdateSuccess: [],
   accountUpdateFailure: ['error'],
+  accountResetSuccess: null,
 })
 
 export const AccountTypes = Types
@@ -46,6 +47,9 @@ export const updateSuccess = (state) => state.merge({ error: null, updating: fal
 // we've had a problem updating the account settings
 export const updateFailure = (state, { error }) => state.merge({ updating: false, error })
 
+//Reseting account on logout
+export const accountResetSuccess = state => INITIAL_STATE
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -55,10 +59,11 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACCOUNT_UPDATE_REQUEST]: updateRequest,
   [Types.ACCOUNT_UPDATE_SUCCESS]: updateSuccess,
   [Types.ACCOUNT_UPDATE_FAILURE]: updateFailure,
+  [Types.ACCOUNT_RESET_SUCCESS]: accountResetSuccess
 })
 
 /* ------------- Selectors ------------- */
 // Is the current user logged in?
-export const isLoggedIn = (accountState) => accountState.account !== null
+export const isLoggedIn = (accountState) => accountState && accountState.account !== null
 
 export const getLogin = (accountState) => (accountState.account !== null ? accountState.account.login : 'anonymousUser')

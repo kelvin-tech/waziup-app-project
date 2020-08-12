@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { ScrollView, Image, BackHandler } from 'react-native'
+import { ScrollView, Image, BackHandler, Text, View } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
 import {
@@ -13,17 +13,26 @@ import {
   storybookScreen,
 } from '../layouts'
 import { connect } from 'react-redux'
+import { isLoggedIn } from '../../shared/reducers/account.reducer'
 
 import styles from './drawer-content.styles'
 import { Images } from '../../shared/themes'
 import DrawerButton from './drawer-button'
 import LoginActions from '../../modules/login/login.reducer'
-import { isLoggedIn } from '../../shared/reducers/account.reducer'
 
 class DrawerContent extends Component {
   constructor(context, props) {
     super(context, props)
-    Navigation.events().bindComponent(this)
+    Navigation.events().bindComponent(this);
+    this.state = {
+      isUserLoggedIn: null,
+    }
+    this.backHandler();
+  }
+
+  componentDidMount() {
+    this.backHandler();
+
   }
 
   hideSideMenu() {
@@ -36,16 +45,16 @@ class DrawerContent extends Component {
     })
   }
 
-  componentDidMount() {
+  backHandler = () => {
     BackHandler.addEventListener('hardwareBackPress', () => {
       this.hideSideMenu()
     })
   }
 
-  handlePressLogin = () => {
-    this.hideSideMenu()
-    loginScreen()
-  }
+  // handlePressLogin = () => {
+  //   this.hideSideMenu()
+  //   loginScreen()
+  // }
   handlePressRegister = () => {
     this.hideSideMenu()
     registerScreen()
@@ -76,21 +85,29 @@ class DrawerContent extends Component {
   }
 
   render() {
+    const { loggedIn } = this.props
+
     return (
       <ScrollView style={styles.container}>
         <Image testID="drawerLogo" source={Images.logoJhipster} style={styles.logo} />
-        {!this.props.loggedIn && <DrawerButton testID="loginDrawerButton" text="Login" onPress={this.handlePressLogin} />}
-        {!this.props.loggedIn && <DrawerButton testID="registerDrawerButton" text="Register" onPress={this.handlePressRegister} />}
-        {!this.props.loggedIn && (
+        {/* {loggedIn &&
+          <View>
+            <Text>{this.props.user}</Text>
+            <Text>{this.props.status}</Text>
+          </View>
+        } */}
+        {/* {!isLoggedIn && <DrawerButton testID="loginDrawerButton" text="Login" onPress={this.handlePressLogin} />} */}
+        {!loggedIn && <DrawerButton testID="registerDrawerButton" text="Register" onPress={this.handlePressRegister} />}
+        {!loggedIn && (
           <DrawerButton testID="forgotPasswordDrawerButton" text="Forgot Password" onPress={this.handlePressForgotPassword} />
         )}
 
-        {this.props.loggedIn && <DrawerButton testID="entitiesDrawerButton" text="Entities" onPress={this.handlePressEntities} />}
-        {this.props.loggedIn && <DrawerButton testID="settingsDrawerButton" text="Settings" onPress={this.handlePressSettings} />}
-        {this.props.loggedIn && (
+        {loggedIn && <DrawerButton testID="entitiesDrawerButton" text="Entities" onPress={this.handlePressEntities} />}
+        {loggedIn && <DrawerButton testID="settingsDrawerButton" text="Settings" onPress={this.handlePressSettings} />}
+        {loggedIn && (
           <DrawerButton testID="changePasswordDrawerButton" text="Change Password" onPress={this.handlePressChangePassword} />
         )}
-        {this.props.loggedIn && <DrawerButton testID="logoutDrawerButton" text="Logout" onPress={this.handlePressLogout} />}
+        {loggedIn && <DrawerButton testID="logoutDrawerButton" text="Logout" onPress={this.handlePressLogout} />}
         {__DEV__ && <DrawerButton testID="storybookDrawerButton" text="Storybook" onPress={this.handlePressStorybook} />}
       </ScrollView>
     )

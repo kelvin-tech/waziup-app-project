@@ -28,7 +28,7 @@ export function* startup(action) {
     })
   }
 
-  yield put(LoginActions.loginLoad())
-  yield put(AccountActions.accountRequest())
+  // yield put(LoginActions.loginLoad())
+  // yield put(AccountActions.accountRequest())
   yield put(AppStateActions.setRehydrationComplete())
 }

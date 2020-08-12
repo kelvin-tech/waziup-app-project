@@ -1,4 +1,4 @@
-package com.newapp;
+package com.homa;
 
 import com.reactnativenavigation.NavigationActivity;
 

@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.newapp"
+        applicationId "com.homa"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

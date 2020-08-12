@@ -24,7 +24,12 @@ const colors = {
   banner: '#5F3E63',
   text: '#E0D7E5',
   whiteBackdrop: '#ffffff',
-  darkAsh: '#B2BEB5'
+  darkAsh: '#B2BEB5',
+  kryptonite: '#4dbf36',
+  fridayGreen: '#afe0ce',
+  butterfly: '#3e68f0',
+  skinBlue: '#393f70',
+  bronze: '#f6c757'
 }
 
 export default colors

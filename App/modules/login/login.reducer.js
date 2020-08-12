@@ -3,7 +3,7 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  loginRequest: ['credentials'],
+  loginRequest: ['username', 'password'],
   loginSuccess: ['authToken'],
   loginFailure: ['error'],
   logoutRequest: null,
@@ -22,6 +22,7 @@ export const INITIAL_STATE = Immutable({
   error: null,
   fetching: false,
   loading: false,
+  isUserLoggedIn: false
 })
 
 /* ------------- Reducers ------------- */
@@ -32,11 +33,11 @@ export const request = (state) => state.merge({ fetching: true })
 // we've successfully logged in
 export const success = (state, data) => {
   const { authToken } = data
-  return state.merge({ fetching: false, error: null, authToken })
+  return state.merge({ fetching: false, isUserLoggedIn: true, error: null, authToken })
 }
 
 // we've had a problem logging in
-export const failure = (state, { error }) => state.merge({ fetching: false, error, authToken: null })
+export const failure = (state, { error }) => state.merge({ fetching: false, isUserLoggedIn: false, error, authToken: null })
 
 // we're attempting to load token from startup sagas
 export const load = (state) => state.merge({ loading: true })
@@ -61,3 +62,4 @@ export const reducer = createReducer(INITIAL_STATE, {
 })
 
 /* ------------- Selectors ------------- */
+

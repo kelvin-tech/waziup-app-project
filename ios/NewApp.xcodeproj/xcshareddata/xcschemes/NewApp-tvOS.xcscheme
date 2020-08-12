@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "NewApp-tvOS.app"
-               BlueprintName = "NewApp-tvOS"
-               ReferencedContainer = "container:NewApp.xcodeproj">
+               BuildableName = "HomA-tvOS.app"
+               BlueprintName = "HomA-tvOS"
+               ReferencedContainer = "container:HomA.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "NewApp-tvOSTests.xctest"
-               BlueprintName = "NewApp-tvOSTests"
-               ReferencedContainer = "container:NewApp.xcodeproj">
+               BuildableName = "HomA-tvOSTests.xctest"
+               BlueprintName = "HomA-tvOSTests"
+               ReferencedContainer = "container:HomA.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "NewApp-tvOSTests.xctest"
-               BlueprintName = "NewApp-tvOSTests"
-               ReferencedContainer = "container:NewApp.xcodeproj">
+               BuildableName = "HomA-tvOSTests.xctest"
+               BlueprintName = "HomA-tvOSTests"
+               ReferencedContainer = "container:HomA.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "NewApp-tvOS.app"
-            BlueprintName = "NewApp-tvOS"
-            ReferencedContainer = "container:NewApp.xcodeproj">
+            BuildableName = "HomA-tvOS.app"
+            BlueprintName = "HomA-tvOS"
+            ReferencedContainer = "container:HomA.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "NewApp-tvOS.app"
-            BlueprintName = "NewApp-tvOS"
-            ReferencedContainer = "container:NewApp.xcodeproj">
+            BuildableName = "HomA-tvOS.app"
+            BlueprintName = "HomA-tvOS"
+            ReferencedContainer = "container:HomA.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "NewApp-tvOS.app"
-            BlueprintName = "NewApp-tvOS"
-            ReferencedContainer = "container:NewApp.xcodeproj">
+            BuildableName = "HomA-tvOS.app"
+            BlueprintName = "HomA-tvOS"
+            ReferencedContainer = "container:HomA.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
