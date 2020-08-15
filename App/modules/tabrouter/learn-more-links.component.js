@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-// slightly modified version of https://github.com/facebook/react-native/blob/e028ac7af2d5b48860f01055f3bbacf91f6b6956/Libraries/NewAppScreen/components/LearnMoreLinks.js
+// slightly modified version of https://github.com/facebook/react-native/blob/e028ac7af2d5b48860f01055f3bbacf91f6b6956/Libraries/HomAScreen/components/LearnMoreLinks.js
 
 import openURLInBrowser from 'react-native/Libraries/Core/Devtools/openURLInBrowser'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
