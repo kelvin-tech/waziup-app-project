@@ -5,9 +5,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Navigation } from 'react-native-navigation'
 import t from 'tcomb-form-native'
 
-import RegisterActions from '../register/register.reducer'
+import RegisterActions from '../../account/register/register.reducer'
 // Styles
-import styles from './register-screen.styles'
+import styles from '../../account/register/register-screen.styles'
 
 let Form = t.form.Form
 

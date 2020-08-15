@@ -2,7 +2,7 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Navigation } from 'react-native-navigation'
-import { isLoggedIn } from '../login/login.sagas'
+import { isLoggedIn } from '../../shared/reducers/account.reducer'
 import { connect } from 'react-redux'
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -33,6 +33,22 @@ class TabRouter extends React.Component {
   }
 
   componentDidMount() {
+    if (!this.props.loggedIn) {
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: LOGIN_SCREEN,
+          options: {
+            topBar: {
+              visible: false,
+              drawBehind: true,
+            },
+          },
+        }
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (!this.props.loggedIn) {
       Navigation.push(this.props.componentId, {
         component: {
@@ -138,7 +154,7 @@ class TabRouter extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.login.isUserLoggedIn,
+    loggedIn: isLoggedIn(state.account),
     fetching: state.register.fetching,
     error: state.register.error,
   }

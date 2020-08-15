@@ -85,8 +85,9 @@ function handleAppStateChange(nextAppState) {
   lastAppState = nextAppState
 }
 
-function refreshAccount() {
-  store.dispatch(LoginActions.loginload())
+function refreshAccount( store) {
+  store.dispatch(LoginActions.loginLoad())
+  store.dispatch(AccountActions.accountRequest())
 }
 // for deep linking
 function handleOpenURL(event) {

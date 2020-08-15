@@ -23,8 +23,7 @@ export default class LightScreen extends React.Component {
                     <View style={styles.hairline} />
                     {/* <Header /> */}
                     <View style={styles.body}>
-                        <Text style={{ alignContent: 'center' }}>Sorry, there's no data to display at this time</Text>
-                        {/* <Button title='Create User' onPress={() => Linking.openURL('https://dashboard.waziup.io/')} /> */}
+                        <Text style={styles.empty_list}>Sorry, there's no data to display at this time</Text>
                     </View>
                 </ScrollView>
             </View>

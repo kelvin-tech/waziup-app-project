@@ -29,7 +29,8 @@ const colors = {
   fridayGreen: '#afe0ce',
   butterfly: '#3e68f0',
   skinBlue: '#393f70',
-  bronze: '#f6c757'
+  bronze: '#f6c757',
+  leaves: '#3cb324'
 }
 
 export default colors

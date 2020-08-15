@@ -10,22 +10,40 @@ import {
     ContributionGraph,
     StackedBarChart
 } from "react-native-chart-kit";
+import styles from './statistics-screen.styles'
 
 export default class RoomTwo extends Component {
     static propTypes = {
         devices: PropTypes.any,
     };
 
+    renderMotionDetected = () => {
+        return (
+            <View style={styles.motion_detected}>
+                <Text style={styles.welcomeText}>Motion Detected in Room Two</Text>
+            </View>
+        )
+    }
+
+    renderNoMotionDetected = () => {
+        return (
+            <View style={styles.motion_not_detected}>
+                <Text style={styles.welcomeText}>No Motion Detected in Room Two</Text>
+            </View>
+        )
+    }
+
     render() {
-        const { devices, sensors } = this.props;
+        const { devices } = this.props;
         const dev2 = devices ? devices[1] : [];
         const humVal = dev2 ? dev2.sensors[1] : [];
         const gasVal = dev2 ? dev2.sensors[0] : [];
         const tempVal = dev2 ? dev2.sensors[3] : [];
         const motionVal = dev2 ? dev2.sensors[2] : [];
         const progressTemp = {
-            labels: ['Humidity', 'Temperature'],
+            labels: ['Humidity', 'Temp'],
             data: [humVal.value.value / 100, tempVal.value.value / 100],
+            legend: ['Humidity', 'Temperature'] // optional
         }
         const data = {
             labels: ["January", "February", "March", "April", "May", "June"],
@@ -60,15 +78,12 @@ export default class RoomTwo extends Component {
             legend: ["Gas Sensor Readings"] // optional
         };
         const chartConfig = {
-            backgroundColor: Colors.jhipsterBlue,
+            backgroundColor: Colors.fridayGreen,
             backgroundGradientFrom: Colors.jhipsterBlue,
             backgroundGradientTo: Colors.jhipsterBlue,
             decimalPlaces: 2, // optional, defaults to 2dp
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-                borderRadius: 25
-            },
             propsForDots: {
                 r: "6",
                 strokeWidth: "2",
@@ -76,29 +91,52 @@ export default class RoomTwo extends Component {
             }
         }
         return (
-            <ScrollView style={{margin: 15}}>
-                <ProgressChart
-                    data={progressTemp}
-                    width={Dimensions.get("window").width}
-                    height={220}
-                    strokeWidth={16}
-                    radius={32}
-                    chartConfig={chartConfig}
-                    hideLegend={false}
-                />
-                <LineChart
-                    data={data}
-                    width={Dimensions.get("window").width}
-                    height={220}
-                    chartConfig={chartConfig}
-                />
-                <LineChart
-                    data={gasData}
-                    width={Dimensions.get("window").width}
-                    height={220}
-                    chartConfig={chartConfig}
-                />
-                {motionVal.value.value === 1 ? <Text>Motion Detected</Text> : <Text>No Motion Detected</Text>}
+            <ScrollView style={{ flex: 1 }} >
+                <View style={{ padding: 15, flex: 1, borderRadius: 15 }}>
+                    <ProgressChart
+                        data={progressTemp}
+                        width={400}
+                        height={220}
+                        strokeWidth={16}
+                        radius={32}
+                        chartConfig={chartConfig}
+                        hideLegend={false}
+                        style={{
+                            borderRadius: 15,
+                            elevation: 2,
+                            padding: 3
+                        }}
+                        hasLegend={true}
+                    />
+                </View>
+                <View style={{ padding: 15, flex: 1, borderRadius: 15 }} >
+                    <LineChart
+                        data={data}
+                        width={400}
+                        height={220}
+                        chartConfig={chartConfig}
+                        style={{
+                            borderRadius: 15,
+                            elevation: 2,
+                            padding: 3
+                        }}
+                    />
+                </View>
+                <View style={{ padding: 15, flex: 1, borderRadius: 15 }} >
+                    <LineChart
+                        data={gasData}
+                        width={400}
+                        height={220}
+                        chartConfig={chartConfig}
+                        style={{
+                            borderRadius: 15,
+                            elevation: 2,
+                            padding: 3
+                        }}
+                        bezier
+                    />
+                </View>
+                {motionVal.value.value === 1 ? this.renderMotionDetected() : this.renderNoMotionDetected()}
             </ScrollView>
         )
     }

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native'
 
-import { Metrics, ApplicationStyles, Colors } from '../../../shared/themes'
+import { Metrics, ApplicationStyles, Colors, Fonts } from '../../../shared/themes'
 
 export default StyleSheet.create({
     ...ApplicationStyles.screen,
@@ -11,10 +11,10 @@ export default StyleSheet.create({
         fontWeight: '600',
     },
     hairline: {
-        borderBottomColor: Colors.snow,
+        borderBottomColor: Colors.fire,
         borderBottomWidth: 1,
         marginHorizontal: 20,
-        marginTop: 32,
+        marginTop: 5,
     },
     logo: {
         marginTop: Metrics.section,
@@ -62,4 +62,39 @@ export default StyleSheet.create({
         paddingRight: 12,
         textAlign: 'right',
     },
+    title: {
+        textAlign: 'center',
+        fontWeight: '300',
+        marginTop: 20,
+        ...Fonts.style.h6
+    },
+    motion_detected: {
+        flex: 1,
+        alignItems: 'center',
+        margin: 15,
+        borderRadius: 8,
+        paddingVertical: 20,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.5,
+        elevation: 2,
+        backgroundColor: Colors.fire,
+        ...Fonts.style.normal
+    },
+    motion_not_detected: {
+        flex: 1,
+        alignItems: 'center',
+        margin: 15,
+        borderRadius: 8,
+        paddingVertical: 20,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.5,
+        elevation: 2,
+        backgroundColor: Colors.leaves,
+        ...Fonts.style.normal
+    },
+    empty_list: {
+        textAlign: 'center',
+        marginTop: 12,
+        ...Fonts.style.empty
+    }
 })
