@@ -12,6 +12,8 @@ import { RegisterTypes } from '../../modules/account/register/register.reducer'
 import { ForgotPasswordTypes } from '../../modules/account/password-reset/forgot-password.reducer'
 import { ChangePasswordTypes } from '../../modules/account/password/change-password.reducer'
 import { UserTypes } from '../../shared/reducers/user.reducer'
+import { SensorTypes } from '../../modules/entities/statistics/sensor.reducer'
+import { DeviceTypes } from '../../modules/account/device/device.reducer'
 // ignite-jhipster-saga-redux-import-needle
 
 /* ------------- Sagas ------------- */
@@ -23,10 +25,12 @@ import { forgotPassword } from '../../modules/account/password-reset/forgot-pass
 import { changePassword } from '../../modules/account/password/change-password.sagas'
 import { getAccount, updateAccount } from '../../shared/sagas/account.sagas'
 import { getUser, getUsers, updateUser, deleteUser } from '../../shared/sagas/user.sagas'
+import { getSensor, getSensorData, getSensors, updateSensor, deleteSensor, createSensor } from '../../modules/entities/statistics/sensor.sagas'
+import { getDevice, getDevices, updateDevice, deleteDevice, createDevice } from '../../modules/account/device/device.sagas'
+
 // ignite-jhipster-saga-method-import-needle
 
 /* ------------- API ------------- */
-
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
 const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
@@ -51,6 +55,19 @@ export default function* root() {
     takeLatest(UserTypes.USER_ALL_REQUEST, getUsers, api),
     takeLatest(UserTypes.USER_UPDATE_REQUEST, updateUser, api),
     takeLatest(UserTypes.USER_DELETE_REQUEST, deleteUser, api),
+
+    takeLatest(SensorTypes.SENSOR_REQUEST, getSensor, api),
+    takeLatest(SensorTypes.SENSOR_ALL_REQUEST, getSensors, api),
+    takeLatest(SensorTypes.SENSOR_DATA_REQUEST, getSensorData, api),
+    takeLatest(SensorTypes.SENSOR_UPDATE_REQUEST, updateSensor, api),
+    takeLatest(SensorTypes.SENSOR_DELETE_REQUEST, deleteSensor, api),
+    takeLatest(SensorTypes.SENSOR_CREATE_REQUEST, createSensor, api),
+
+    takeLatest(DeviceTypes.DEVICE_REQUEST, getDevice, api),
+    takeLatest(DeviceTypes.DEVICE_ALL_REQUEST, getDevices, api),
+    takeLatest(DeviceTypes.DEVICE_UPDATE_REQUEST, updateDevice, api),
+    takeLatest(DeviceTypes.DEVICE_DELETE_REQUEST, deleteDevice, api),
+    takeLatest(DeviceTypes.DEVICE_CREATE_REQUEST, createDevice, api),
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, api),
     takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, api),

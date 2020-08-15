@@ -10,15 +10,15 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>newapp</string>
+			<string>homa</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>newapp</string>
+				<string>homa</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>NewApp</string>
+	<string>HomA</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

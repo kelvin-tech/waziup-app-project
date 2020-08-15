@@ -4,8 +4,9 @@ import AccountActions from '../reducers/account.reducer'
 import { callApi } from './call-api.saga'
 
 // attempts to account
-export function* getAccount(api) {
-  const response = yield call(api.getAccount)
+export function* getAccount(api, action) {
+  const { accountId } = action
+  const response = yield call(api.getUser, accountId)
 
   // success?
   if (response.ok && response.headers['content-type'].indexOf('json') !== -1) {
@@ -20,7 +21,7 @@ export function* getAccount(api) {
 // attempts to update account settings
 export function* updateAccount(api, action) {
   const { account } = action
-  const apiCall = call(api.updateAccount, account)
+  const apiCall = call(api.updateUserSmsCredit, account)
   const response = yield call(callApi, apiCall)
 
   // success?

@@ -15,6 +15,8 @@ export const reducers = combineReducers({
   register: require('../../modules/account/register/register.reducer').reducer,
   changePassword: require('../../modules/account/password/change-password.reducer').reducer,
   forgotPassword: require('../../modules/account/password-reset/forgot-password.reducer').reducer,
+  sensor: require('../../modules/entities/statistics/sensor.reducer').reducer,
+  device: require('../../modules/account/device/device.reducer').reducer,
 })
 
 export default () => {

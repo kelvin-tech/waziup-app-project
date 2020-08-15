@@ -2,14 +2,16 @@ import { AppState, Linking } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { Provider } from 'react-redux'
 import { Images } from '../shared/themes'
+import { isLoggedIn, selectAuthToken } from '../modules/login/login.sagas'
 
 import createStore from '../shared/reducers'
 import Colors from '../shared/themes/colors'
 import '../config/reactotron-config'
 import AccountActions from '../shared/reducers/account.reducer'
+import LoginActions from '../modules/login/login.reducer'
 
 import LoginScreen from '../modules/login/login-screen'
-import LaunchScreen from '../modules/home/launch-screen'
+import LaunchScreen from '../modules/tabrouter/TabRouter'
 import DrawerContent from './drawer/drawer-content'
 import SettingsScreen from '../modules/account/settings/settings-screen'
 import RegisterScreen from '../modules/account/register/register-screen'
@@ -48,6 +50,9 @@ export const appStack = {
               component: {
                 name: LAUNCH_SCREEN,
                 options: {
+                  background: {
+                    color: Colors.background,
+                  },
                   topBar: {
                     title: {
                       text: 'Welcome!',
@@ -80,7 +85,8 @@ function handleAppStateChange(nextAppState) {
   lastAppState = nextAppState
 }
 
-function refreshAccount() {
+function refreshAccount( store) {
+  store.dispatch(LoginActions.loginLoad())
   store.dispatch(AccountActions.accountRequest())
 }
 // for deep linking
@@ -118,6 +124,7 @@ export function registerScreensAndStartApp() {
   // ignite-jhipster-navigation-registration-needle
 
   Navigation.events().registerAppLaunchedListener(() => {
+
     Navigation.setDefaultOptions({
       topBar: {
         topBar: {
@@ -143,7 +150,7 @@ export function registerScreensAndStartApp() {
       },
     })
 
-    Navigation.setRoot(appStack)
+    Navigation.setRoot(loginScreen)
 
     // handle app state and deep links
     AppState.addEventListener('change', handleAppStateChange)
@@ -151,24 +158,35 @@ export function registerScreensAndStartApp() {
   })
 }
 
-export const loginScreen = () =>
-  Navigation.showModal({
-    stack: {
-      children: [
-        {
-          component: {
-            name: LOGIN_SCREEN,
-            options: {
-              topBar: {
-                visible: false,
-                drawBehind: true,
+export const loginScreen = {
+  root: {
+    sideMenu: {
+      left: {
+        component: {
+          name: DRAWER_CONTENT,
+        },
+      },
+      center: {
+        stack: {
+          id: 'center',
+          children: [
+            {
+              component: {
+                name: LOGIN_SCREEN,
+                options: {
+                  topBar: {
+                    visible: false,
+                    drawBehind: true,
+                  },
+                },
               },
             },
-          },
+          ],
         },
-      ],
+      },
     },
-  })
+  }
+}
 
 export const registerScreen = () =>
   Navigation.push('center', {

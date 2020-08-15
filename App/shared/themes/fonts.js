@@ -1,7 +1,8 @@
 const type = {
-  base: 'Avenir-Book',
-  bold: 'Avenir-Black',
-  emphasis: 'HelveticaNeue-Italic',
+  text: 'YanoneKaffeesatz-Regular',
+  heading: 'Oswald-SemiBold',
+  title: 'Staatliches',
+  empty: 'Pangolin-Regular'
 }
 
 const size = {
@@ -20,7 +21,7 @@ const size = {
 
 const style = {
   h1: {
-    fontFamily: type.base,
+    fontFamily: type.text,
     fontSize: size.h1,
   },
   h2: {
@@ -28,29 +29,33 @@ const style = {
     fontSize: size.h2,
   },
   h3: {
-    fontFamily: type.emphasis,
+    fontFamily: type.title,
     fontSize: size.h3,
   },
   h4: {
-    fontFamily: type.base,
+    fontFamily: type.text,
     fontSize: size.h4,
   },
   h5: {
-    fontFamily: type.base,
-    fontSize: size.h5,
+    fontFamily: type.text,
+    fontSize: size.h4,
   },
   h6: {
-    fontFamily: type.emphasis,
+    fontFamily: type.heading,
     fontSize: size.h6,
   },
   normal: {
-    fontFamily: type.base,
+    fontFamily: type.text,
     fontSize: size.regular,
   },
   description: {
-    fontFamily: type.base,
+    fontFamily: type.text,
     fontSize: size.medium,
   },
+  empty:{
+    fontFamily: type.empty,
+    fontSize: size.regular
+  }
 }
 
 export default {

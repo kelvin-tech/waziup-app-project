@@ -1,19 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity, Linking } from 'react-native'
+import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity, Linking, BackHandler } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
+import LoginActions from './login.reducer';
+import { isLoggedIn } from '../../shared/reducers/account.reducer'
+
 import styles from './login-screen.styles'
 import { Images, Metrics } from '../../shared/themes'
-import LoginActions from './login.reducer'
 import Toast from 'react-native-simple-toast';
-import { truncate } from 'lodash'
+import { LAUNCH_SCREEN } from '../../navigation/layouts'
+import Colors from '../../shared/themes/colors'
 
 class LoginScreen extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func,
     fetching: PropTypes.bool,
+    loggedIn: PropTypes.bool,
     attemptLogin: PropTypes.func,
   }
 
@@ -21,53 +25,97 @@ class LoginScreen extends React.Component {
     super(props)
     Navigation.events().bindComponent(this)
     this.state = {
-      username: '',
-      password: '',
+      username: null,
+      password: null,
       visibleHeight: Metrics.screenHeight,
       topLogo: {
         width: Metrics.screenWidth,
         height: 230
       },
+      requesting: false
     }
   }
 
-  componentDidUpdate(prevProps) {
+  backHandler = () => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      BackHandler.exitApp();
+    })
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let nextLoading = nextProps.fetching;
+    if (nextLoading !== prevState.loading) {
+      return { loading: nextLoading };
+    }
+    // if (nextProps.loggedIn !== prevState.loggedIn) {
+    //   return { loggedIn: nextProps.loggedIn };
+    // }
+    else return null;
+  }
+
+  componentDidMount() {
+    console.tron.log(`Is the user logged in: ${this.props.loggedIn}`)
+
+    this.backHandler();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     if (!this.props.fetching) {
       if (prevProps.fetching && this.props.error) {
         Alert.alert('Error', this.props.error, [{ text: 'OK' }])
       }
-      if (!prevProps.account && this.props.account) {
-        Navigation.dismissModal(this.props.componentId)
-      }
     }
-  }
+    
+    if (this.props.loggedIn) {
+      console.tron.log(`Is the user logged in: ${this.props.loggedIn}`)
 
-  waziLogin = async credentials => {
-    try {
-      await this.props.getAuth(credentials)
-    } catch (error) {
-      console.tron.log('Error logging in' + error)
+      Navigation.push(this.props.componentId, {
+        component: {
+          name: LAUNCH_SCREEN,
+          options: {
+            background: {
+              color: Colors.background,
+            },
+            topBar: {
+              title: {
+                text: 'Welcome!',
+                color: Colors.snow,
+              },
+              leftButtons: [
+                {
+                  id: 'menuButton',
+                  icon: Images.menuIcon,
+                  testID: 'menuButton',
+                  color: Colors.snow,
+                },
+              ],
+            },
+          },
+          passProps: {
+            user: this.state.username,
+            status: 'online'
+          }
+        }
+      });
     }
   }
 
   handlePressLogin = () => {
-    const credentials = {
-      username: this.state.username,
-      password: this.state.password
-    }
+    const { username, password } = this.state
     // attempt a login - a saga is listening to pick it up from here.
-    if (this.state.username) {
-      Toast.showWithGravity('Please input username')
-    } else if (this.state.password) {
-      Toast.showWithGravity('Please input password')
-    } else if (credentials) {
-      { this.waziLogin(credentials) }
+    if (!username) {
+      Toast.show('Please input username')
+    } else if (!password) {
+      Toast.show('Please input password')
+    } else if (username && password) {
+      this.setState({ requesting: true })
+      this.props.attemptLogin(username, password)
     }
   }
 
-  handlePressCancel = () => {
-    Navigation.dismissModal(this.props.componentId)
-  }
+  // handlePressCancel = () => {
+  //   Navigation.dismissModal(this.props.componentId)
+  // }
 
   handleChangeUsername = (text) => {
     this.setState({ username: text })
@@ -79,9 +127,7 @@ class LoginScreen extends React.Component {
 
   render() {
     const { username, password } = this.state
-    const { fetching } = this.props
-    const editable = !fetching
-    const textInputStyle = styles.textInput 
+    const textInputStyle = styles.textInput
     return (
       <View
         contentContainerStyle={styles.contentContainer}
@@ -136,17 +182,12 @@ class LoginScreen extends React.Component {
                 <Text style={styles.loginText}>Sign In</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity testID="loginScreenCancelButton" style={styles.loginButtonWrapper} onPress={this.handlePressCancel}>
-              <View style={styles.loginButton}>
-                <Text style={styles.loginText}>Cancel</Text>
-              </View>
-            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.noAccount}>
-          <Text style={styles.noAccountText}>If you don't have an account, click </Text>
+          <Text style={styles.noAccountText}>Don't have an account? </Text>
           <TouchableOpacity onPress={() => Linking.openURL('https://dashboard.waziup.io/')} testID="createUserButton">
-            <Text style={styles.noAccountUnderline} >here</Text>
+            <Text style={styles.noAccountUnderline} >Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -156,7 +197,7 @@ class LoginScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    account: state.account.account,
+    loggedIn: isLoggedIn(state.account),
     fetching: state.login.fetching,
     error: state.login.error,
   }
@@ -165,7 +206,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
-    getAuth: (credentials) => dispatch(LoginActions.loginRequest(credentials)),
+    setAuth: () => dispatch(LoginActions.loginLoad()),
     logout: () => dispatch(LoginActions.logoutRequest()),
   }
 }

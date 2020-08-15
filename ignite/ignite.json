@@ -1,8 +1,8 @@
 {
-  "name": "NewApp",
+  "name": "HomA",
   "createdWith": "3.5.2",
   "boilerplate": "ignite-jhipster",
-  "jhipsterDirectory": "../NewApp",
+  "jhipsterDirectory": "../HomA",
   "authType": "jwt",
   "searchEngine": true,
   "websockets": false,

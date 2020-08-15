@@ -43,12 +43,12 @@ platform :ios do
 
     # Change build number
     increment_build_number(
-      xcodeproj: "./ios/NewApp.xcodeproj"
+      xcodeproj: "./ios/HomA.xcodeproj"
     )
 
     gym(
-      scheme: "NewApp",
-      workspace: "./ios/NewApp.xcworkspace"
+      scheme: "HomA",
+      workspace: "./ios/HomA.xcworkspace"
     )
 
     pilot(username: @username, skip_waiting_for_build_processing: true)
