@@ -19,7 +19,7 @@
         "fs": false
     },
     "dependencies": {
-        "superagent": "3.5.2"
+        "superagent": "3.7.0"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
